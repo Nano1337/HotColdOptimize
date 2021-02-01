@@ -37,9 +37,9 @@ def optimize_bin(diffs):
     idx = idx[0][0]
     optD = D[idx]
 
-    # print('Optimal Bin Number : ', N[idx])
+    print('Optimal Bin Number : ', N[idx])
     # print('Optimal Bin Width :', optD)
-    # plot_graphs(data, data_min, data_max, N, C, D, idx, shift, loc, cmin)
+    plot_graphs(data, data_min, data_max, N, C, D, idx, shift, loc, cmin)
 
     return N[idx]
 
@@ -60,6 +60,20 @@ def plot_graphs(data, data_min, data_max, N, C, D, idx, shift, loc, cmin):
     xlabel('Number of bins')
     ylabel('Cobj')
     show()
+def to_modtimes(np_diff, proj_name, facility_name):
+    # Finding Project 201332-09 to experiment with Poisson Point Process
+    project_info = []
+    for project in np_diff:
+        if proj_name in project[1] and facility_name in project[0]:  # use both bc duplicate projects exist
+            project_info = project
+
+    # Get list of relative modification dates without creation date
+    modtimes = []
+    initial = project_info[3][0]
+    for i in range(1, len(project_info[3])):
+        modtimes.append(round(project_info[3][i] - initial, 3))
+
+    return modtimes
 
 if __name__ == "__main__":
     # Get numpy array of project with most LastModifiedDates
@@ -67,31 +81,32 @@ if __name__ == "__main__":
     np_data = to_numpy(df)
     np_diff = to_datetime_differences(np_data)
 
-    # Finding Project 201332-09 to experiment with Poisson Point Process
-    project_info = []
-    for project in np_diff:
-        if '201332-09' in project[1]:
-            project_info = project
-    # Get list of relative modification dates without creation date
-    modtimes = []
-    initial = project_info[2][0]
-    for i in range(1, len(project_info[2])):
-        modtimes.append(round(project_info[2][i]-initial, 3))
+    # Get all Modtimes
+    for i in range(len(np_diff)):
+        print(to_modtimes(np_diff, np_diff[i, 1], np_diff[i, 0]))
 
-    # Gets difference between modified days
-    diff_times = [modtimes[0]]
-    for i in range(len(modtimes)-1):
-        diff_times.append(round(modtimes[i+1]-modtimes[i], 3))
 
-    # Make function to calculate probability at least one event would occur in less than 30 days
-    # Figure out how to calculate lambda
+    # Use Math.floor to round down to correct day
+    # Increment count to 7 and mod for each day of the week
 
-    # Create optimum binning algorithm function - on GitHub to get optimum lambda
-    opt_bin = optimize_bin(diff_times)
-
-    # Calculate Lambda
-    p_lambda = len(diff_times)/opt_bin
-
-    # Apply Probability Mass Function formula to find P(T <= 7 days)
-    prob = 1-math.exp(-1*p_lambda*7)
-    print(prob)
+    # # Gets difference between modified days
+    # diff_times = [modtimes[0]]
+    # for i in range(len(modtimes)-1):
+    #     diff_times.append(round(modtimes[i+1]-modtimes[i], 3))
+    #
+    # # Make function to calculate probability at least one event would occur in less than 30 days
+    # # Figure out how to calculate lambda
+    #
+    # # Create optimum binning algorithm function - on GitHub to get optimum lambda
+    # opt_bin = optimize_bin(diff_times)
+    #
+    # # Calculate Lambda
+    # p_lambda = len(diff_times)/opt_bin
+    #
+    # # Apply Probability Mass Function formula to find P(T <= 7 days)
+    # prob = 1-math.exp(-1*p_lambda*7)
+    # print(prob)
+    #
+    # # Make a function that sections off projects that don't have enough data
+    # # Generate output df -> csv with facility, project, probability of
+    # # happening in next 7 days

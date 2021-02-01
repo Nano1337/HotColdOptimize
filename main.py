@@ -7,8 +7,8 @@ def init_df():
     # Convert dates to date data type with pd.to_datatime()
 
     # read data from csv file
-    df = pd.read_csv('C:\\Users\\HaoliYin\\Documents\\Haoli Project Data\\Jan22AllData.csv')
-    # if need to add header: , names=["Facility", "Project", "ModifiedDate", "CreationTime"]
+    df = pd.read_csv('C:\\Users\\HaoliYin\\Documents\\Haoli Project Data\\Jan31AllData.csv')
+    # if need to add header: , names=["Facility", "Project", "ModifiedDate", "CreationTime", "DirSizeMB"]
     # Create new DataFrame
     # put creation date as first value and append rest of mod dates
     # dataframe looks like [[facility, project, [creation date, moddate1, moddate2, ...]],
@@ -28,16 +28,16 @@ def init_df():
 
         # if new project then add both creation and first modification date
         if count == 0:
-            temp = [row.Facility, row.Project, row.CreationTime]
+            temp = [row.Facility, row.Project, row.CreationTime, row.DirSizeMB]
             data.append(temp)
-            temp1 = [row.Facility, row.Project, row.LastModifiedTime]
+            temp1 = [row.Facility, row.Project, row.LastModifiedTime, row.DirSizeMB]
             data.append(temp1)
         # else append next modification date
         else:
-            temp = [row.Facility, row.Project, row.LastModifiedTime]
+            temp = [row.Facility, row.Project, row.LastModifiedTime, row.DirSizeMB]
             data.append(temp)
         count += 1
-    df_org = pd.DataFrame(data, columns=["Facility", "Project", "ModDate"])
+    df_org = pd.DataFrame(data, columns=["Facility", "Project", "ModDate", "DirSizeMB"])
     # Get rid of empty/null spaces
     df_org['ModDate'].replace('', np.nan, inplace=True)
     df_org.dropna(subset=['ModDate'], inplace=True)
@@ -51,6 +51,10 @@ def save_df(df, name):
     df.to_csv(name)
 
 def to_numpy(df):
+
+    # Change Facilities column to datatype string
+    df['Facility'] = df['Facility'].map(str)
+
     # Only add Facility and Project name once
     previous_project_name = df.iloc[0, 1]
     data = []
@@ -75,7 +79,7 @@ def to_numpy(df):
 
             # Reset for new project
             modified_times = []
-            project_info = [row.Facility, row.Project]
+            project_info = [row.Facility, row.Project, row.DirSizeMB]
             previous_project_name = current_project_name
 
         # Add next modified time
@@ -90,20 +94,20 @@ def to_datetime_differences(data):
     # Converts all LastModifiedDates to datetime variable
     for x in data:
         times = []
-        for time in x[2]:
+        for time in x[3]:
             times.append(datetime.strptime(time[0:19], '%Y-%m-%d %H:%M:%S'))
-        x[2] = times
+        x[3] = times
 
     # Find time relative to creation date
     for x in data:
         diffs = []
-        for i in range(len(x[2])):
+        for i in range(len(x[3])):
             if i == 0:
                 continue
             else:
                 # converts to difference in days
-                diffs.append(round((x[2][i] - x[2][0]).total_seconds()/86400, 3))
-        x[2] = diffs
+                diffs.append(round((x[3][i] - x[3][0]).total_seconds()/86400, 3))
+        x[3] = diffs
     return data
 if __name__ == "__main__":
 
@@ -114,7 +118,9 @@ if __name__ == "__main__":
     # save_df(df, 'organizedData.csv')
 
     # Turn DataFrame into NumPy array
-    # np_data = to_numpy(df)
+    np_data = to_numpy(df)
 
     # Turns dates list into datetime variables
-    # datetime_data = to_datetime_differences(np_data)
+    datetime_data = to_datetime_differences(np_data)
+
+    print(np_data)
