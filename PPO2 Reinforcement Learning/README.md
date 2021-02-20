@@ -1,7 +1,7 @@
 To create tensorboard in google colab:
 
 - %load_ext tensorboard
-- %tensorboard --logdir ./PPO2_optimize_tensorboard/
+- %tensorboard --logdir ./PPO2_logs/
 
 PPO2 model was trained with Stable Baselines 2.10.0: 
 - Policy = 'MlpPolicy'
