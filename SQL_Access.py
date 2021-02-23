@@ -122,12 +122,15 @@ def correct_anomalies():
         if corrected in write_times.Project.values:
             closed_projects['ProjectFolder'] = closed_projects['ProjectFolder'].replace([correction_list[i]], corrected)
 
-    return closed_projects, write_times, read_times
+    # write/read_times contains active and closed projects, use closed_projects to restrict write/read_times to closed projects only
+    closed_projects_list = closed_projects['ProjectFolder'].tolist()
+    boolean_series1 = write_times.Project.isin(closed_projects_list)
+    boolean_series2 = read_times.Project.isin(closed_projects_list)
+    filtered_write_times = write_times[boolean_series1]
+    filtered_read_times = read_times[boolean_series2]
 
+    return filtered_write_times, filtered_read_times
 
-closed_projects, write_times, read_times = correct_anomalies()
-# TODO: Bin write_times and read_times for past 7 days
-# TODO: join all three dataframes to look like:
-'''
-    Facility, Project, DirSizeMB, [ModDay1Freq, ... ModDay7Freq], [AccessDay1Freq, ... AccessDay7Freq] 
-'''
+def get_data():
+    return correct_anomalies()
+

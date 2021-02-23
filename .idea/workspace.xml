@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5f7fb6c-6b6e-4024-ab65-92dc5e30a594" name="Default Changelist" comment="Create SQL access script and .env file for secure authentication">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="a5f7fb6c-6b6e-4024-ab65-92dc5e30a594" name="Default Changelist" comment="Connect 2nd Database and correct data anomalies for table joining">
+      <change afterPath="$PROJECT_DIR$/Join_Tables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL Access.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL_Access.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +54,8 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager" selected="Python.SQL Access">
-    <configuration name="SQL Access" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.Join_Tables">
+    <configuration name="Join_Tables" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="HotColdOptimize" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -65,7 +65,26 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SQL Access.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Join_Tables.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SQL_Access" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="HotColdOptimize" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\HaoliYin\Documents\HotColdOptimize\SQL_Access.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,11 +202,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SQL Access" />
+        <item itemvalue="Python.Join_Tables" />
+        <item itemvalue="Python.SQL_Access" />
         <item itemvalue="Python.analyze_data" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.random_testing" />
-        <item itemvalue="Python.analyze_data" />
       </list>
     </recent_temporary>
   </component>
@@ -252,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614020187389</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Connect 2nd Database and correct data anomalies for table joining">
+      <created>1614031770722</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1614031770722</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +305,8 @@
     <MESSAGE value="Finish Poisson Model" />
     <MESSAGE value="Adapt File Size Column" />
     <MESSAGE value="Create SQL access script and .env file for secure authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create SQL access script and .env file for secure authentication" />
+    <MESSAGE value="Connect 2nd Database and correct data anomalies for table joining" />
+    <option name="LAST_COMMIT_MESSAGE" value="Connect 2nd Database and correct data anomalies for table joining" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HotColdOptimize$main.coverage" NAME="main Coverage Results" MODIFIED="1612474937328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
