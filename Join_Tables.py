@@ -1,14 +1,16 @@
 from SQL_Access import get_data
 import pandas as pd
 from datetime import date, timedelta
+import pickle
+import numpy as np
+
 
 def get_binned_times(data, current_project_name, time_type):
-
     # get sub-table with rows from write_data matching the current project
     sub_table = data.loc[data['Project'] == current_project_name]
 
     # only use write times from the past 7 days
-    past_week = sub_table[sub_table[time_type].dt.date >= (date.today() - timedelta(weeks=1))]
+    past_week = sub_table[sub_table[time_type].dt.date > (date.today() - timedelta(weeks=1))]
 
     # bin write times by days
     last_data_time = past_week.groupby(pd.Grouper(key=time_type, freq='D')).size().tolist()
@@ -45,15 +47,14 @@ def join_tables():
             previous_project_name = current_project_name
 
         if count == 0:
-
             # if new project, then add basic project info
             project = [row.Facility, row.Project, row.DirSizeMB]
 
             last_modified_time = get_binned_times(write_data, current_project_name, 'LastModifiedTime')
-            project.append(last_modified_time)
+            project += last_modified_time
 
             last_access_time = get_binned_times(read_data, current_project_name, 'LastAccessTime')
-            project.append(last_access_time)
+            project += last_access_time
 
             # add project to data
             data.append(project)
@@ -61,3 +62,11 @@ def join_tables():
         count += 1
 
     return data
+
+
+def export_data():
+    data = join_tables()
+    data_numpy = np.array(data)
+    np.save("weekdata.npy", data_numpy)
+
+export_data()
